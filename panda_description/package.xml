@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>franka_description</name>
+  <name>panda_description</name>
   <version>0.0.0</version>
-  <description>franka_description contains URDF files and meshes of Franka Emika robots</description>
+  <description>panda_description contains URDF files and meshes of Franka Emika Panda Robot</description>
   <maintainer email="support@franka.de">Franka Emika GmbH</maintainer>
   <license>Apache 2.0</license>
   <author>Franka Emika GmbH</author>
