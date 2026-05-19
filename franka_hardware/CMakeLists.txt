@@ -24,7 +24,6 @@ find_package(Franka REQUIRED) # Franka_DIR will provide the path to the libfrank
 add_library(franka_hardware
         SHARED
         src/franka_hardware_interface.cpp
-        src/franka_multi_hardware_interface.cpp
         src/robot.cpp
         src/franka_param_service_server.cpp
         src/franka_error_recovery_service_server.cpp
@@ -59,9 +58,7 @@ install(
         DESTINATION include
 )
 
-
 if(BUILD_TESTING)
-    find_package(ament_cmake_clang_format REQUIRED)
     find_package(ament_cmake_copyright REQUIRED)
     find_package(ament_cmake_cppcheck REQUIRED)
     find_package(ament_cmake_flake8 REQUIRED)
@@ -70,7 +67,6 @@ if(BUILD_TESTING)
     find_package(ament_cmake_xmllint REQUIRED)
 
     set(CPP_DIRECTORIES src include)
-    ament_clang_format(CONFIG_FILE ../.clang-format ${CPP_DIRECTORIES})
     ament_copyright(${CPP_DIRECTORIES} package.xml)
     ament_cppcheck(${CPP_DIRECTORIES})
     ament_lint_cmake(CMakeLists.txt)
