@@ -97,12 +97,12 @@ def generate_launch_description():
         #     },
         #     on_exit=Shutdown(),
         # ),
-        # Node(
-        #     package='controller_manager',
-        #     executable='spawner',
-        #     arguments=['joint_state_broadcaster'],
-        #     output='screen',
-        # ),
+        Node(
+            package='controller_manager',
+            executable='spawner',
+            arguments=['joint_state_broadcaster'],
+            output='screen',
+        ),
         Node(
             package='controller_manager',
             executable='spawner',
@@ -118,7 +118,6 @@ def generate_launch_description():
         #     condition=IfCondition(load_gripper)
 
         # ),
-
         # Node(package='rviz2',
         #      executable='rviz2',
         #      name='rviz2',
