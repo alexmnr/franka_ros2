@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(panda_description)
+project(franka_description)
 find_package(ament_cmake REQUIRED)
 
 # Install launch files.
