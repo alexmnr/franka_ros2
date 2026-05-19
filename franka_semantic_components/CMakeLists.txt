@@ -32,18 +32,6 @@ ament_target_dependencies(franka_semantic_components
 install(TARGETS franka_semantic_components DESTINATION lib)
 install(DIRECTORY include/ DESTINATION include)
 
-
-
-
-
-
-
-
-
-
-
-
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

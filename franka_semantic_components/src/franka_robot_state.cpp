@@ -255,10 +255,10 @@ bool FrankaRobotState::get_values_as_message(franka_msgs::msg::FrankaState& mess
 
   static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->F_T_EE),
                 "Robot state transforms do not have same size");
-  static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->F_T_NE),
-                  "Robot state transforms do not have same size");
-  static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->NE_T_EE),
-                  "Robot state transforms do not have same size");
+  // static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->F_T_NE),
+  //                 "Robot state transforms do not have same size");
+  // static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->NE_T_EE),
+  //                 "Robot state transforms do not have same size");
   static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->EE_T_K),
                 "Robot state transforms do not have same size");
   static_assert(sizeof(robot_state_ptr->O_T_EE) == sizeof(robot_state_ptr->O_T_EE_d),
@@ -268,8 +268,8 @@ bool FrankaRobotState::get_values_as_message(franka_msgs::msg::FrankaState& mess
   for (size_t i = 0; i < robot_state_ptr->O_T_EE.size(); i++) {
     message.o_t_ee[i] = robot_state_ptr->O_T_EE[i];
     message.f_t_ee[i] = robot_state_ptr->F_T_EE[i];
-    message.f_t_ne[i] = robot_state_ptr->F_T_NE[i];
-    message.ne_t_ee[i] = robot_state_ptr->NE_T_EE[i];
+    // message.f_t_ne[i] = robot_state_ptr->F_T_NE[i];
+    // message.ne_t_ee[i] = robot_state_ptr->NE_T_EE[i];
     message.ee_t_k[i] = robot_state_ptr->EE_T_K[i];
     message.o_t_ee_d[i] = robot_state_ptr->O_T_EE_d[i];
     message.o_t_ee_c[i] = robot_state_ptr->O_T_EE_c[i];

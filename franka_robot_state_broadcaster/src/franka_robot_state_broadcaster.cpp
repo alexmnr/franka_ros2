@@ -11,7 +11,6 @@
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/clock.hpp"
 #include "rclcpp/qos.hpp"
-#include "rclcpp/qos_event.hpp"
 #include "rclcpp/time.hpp"
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "rcpputils/split.hpp"
@@ -47,6 +46,12 @@ controller_interface::CallbackReturn FrankaRobotStateBroadcaster::on_configure(
     realtime_franka_state_publisher =
         std::make_shared<realtime_tools::RealtimePublisher<franka_msgs::msg::FrankaState>>(
             franka_state_publisher);
+
+    wrench_publisher = get_node()->create_publisher<geometry_msgs::msg::WrenchStamped>(
+        "~/" + state_interface_name + "/wrench", rclcpp::SystemDefaultsQoS());
+    realtime_wrench_publisher =
+        std::make_shared<realtime_tools::RealtimePublisher<geometry_msgs::msg::WrenchStamped>>(
+            wrench_publisher);
     ;
   } catch (const std::exception& e) {
     fprintf(stderr,
@@ -97,6 +102,24 @@ controller_interface::return_type FrankaRobotStateBroadcaster::update(
       realtime_franka_state_publisher->unlock();
       return controller_interface::return_type::ERROR;
     }
+    if (realtime_wrench_publisher && realtime_wrench_publisher->trylock()) {
+      realtime_wrench_publisher->msg_.header.stamp = time;
+      // Copying the frame_id so it matches the robot state's reference frame
+      realtime_wrench_publisher->msg_.header.frame_id = realtime_franka_state_publisher->msg_.header.frame_id; 
+      
+      // Map the 6 elements of k_f_ext_hat_k to the geometry_msgs::msg::Wrench fields
+      // Indices 0-2 are forces (x, y, z), Indices 3-5 are torques (x, y, z)
+      const auto& wrench_data = realtime_franka_state_publisher->msg_.k_f_ext_hat_k;
+      realtime_wrench_publisher->msg_.wrench.force.x = wrench_data[0];
+      realtime_wrench_publisher->msg_.wrench.force.y = wrench_data[1];
+      realtime_wrench_publisher->msg_.wrench.force.z = wrench_data[2];
+      realtime_wrench_publisher->msg_.wrench.torque.x = wrench_data[3];
+      realtime_wrench_publisher->msg_.wrench.torque.y = wrench_data[4];
+      realtime_wrench_publisher->msg_.wrench.torque.z = wrench_data[5];
+
+      realtime_wrench_publisher->unlockAndPublish();
+    }
+
     realtime_franka_state_publisher->unlockAndPublish();
     return controller_interface::return_type::OK;
 

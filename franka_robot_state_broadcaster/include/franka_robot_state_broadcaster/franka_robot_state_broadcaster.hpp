@@ -8,13 +8,12 @@
 #include "franka_msgs/msg/franka_state.hpp"
 #include "franka_msgs/msg/errors.hpp"
 #include "franka_semantic_components/franka_robot_state.hpp"
+#include "geometry_msgs/msg/wrench_stamped.hpp"
 
 #include "controller_interface/controller_interface.hpp"
 #include "rclcpp_lifecycle/lifecycle_publisher.hpp"
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
-#include "realtime_tools/realtime_publisher.h"
-
-
+#include "realtime_tools/realtime_publisher.hpp"
 
 namespace franka_robot_state_broadcaster{
 
@@ -51,6 +50,8 @@ class FrankaRobotStateBroadcaster : public controller_interface::ControllerInter
         realtime_franka_state_publisher;   
     std::unique_ptr<franka_semantic_components::FrankaRobotState> franka_robot_state;
     size_t arm_count;
+    std::shared_ptr<rclcpp::Publisher<geometry_msgs::msg::WrenchStamped>> wrench_publisher;
+    std::shared_ptr<realtime_tools::RealtimePublisher<geometry_msgs::msg::WrenchStamped>> realtime_wrench_publisher;
     int frequency;
 };
 
