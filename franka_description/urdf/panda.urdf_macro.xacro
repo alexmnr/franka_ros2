@@ -3,6 +3,17 @@
   <!-- safety_distance: Minimum safety distance in [m] by which the collision volumes are expanded and which is enforced during robot motions -->
   <!-- tf_prefix: Namespace of the panda arm. Serves to differentiate between arms in case of multiple instances. -->
   <xacro:macro name="panda_urdf_macro" params="tf_prefix safety_distance:=0">
+    <joint name="${tf_prefix}base_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="world" />
+      <child link="${tf_prefix}base_link" />
+    </joint>
+    <link name="${tf_prefix}base_link"/>
+    <joint name="${tf_prefix}base_link_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="${tf_prefix}base_link" />
+      <child link="${tf_prefix}link_0" />
+    </joint>
     <link name="${tf_prefix}link_0">
       <visual>
         <geometry>
@@ -303,5 +314,14 @@
       <parent link="${tf_prefix}link_7"/>
       <child link="${tf_prefix}link_8"/>
     </joint>
+
+    <!-- ROS-Industrial 'tool0' frame: all-zeros tool frame -->
+    <link name="${tf_prefix}tool0"/>
+    <joint name="${tf_prefix}link_8-tool0" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${tf_prefix}link_8"/>
+      <child link="${tf_prefix}tool0"/>
+    </joint>
+
   </xacro:macro>
 </robot>

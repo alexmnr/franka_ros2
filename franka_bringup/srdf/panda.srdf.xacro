@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="panda">
+  <xacro:arg name="tf_prefix" default=""/>
+
+  <xacro:include filename="$(find franka_bringup)/srdf/panda.srdf_macro.xacro"/>
+
+  <xacro:panda_srdf_macro tf_prefix="$(arg tf_prefix)"/>
+
+</robot>
