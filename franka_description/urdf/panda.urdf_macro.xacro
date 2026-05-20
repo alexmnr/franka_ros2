@@ -1,19 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- safety_distance: Minimum safety distance in [m] by which the collision volumes are expanded and which is enforced during robot motions -->
-  <!-- arm_id: Namespace of the panda arm. Serves to differentiate between arms in case of multiple instances. -->
-  <xacro:macro name="panda_arm" params="arm_id:='panda' description_pkg:='franka_description' connected_to:='' xyz:='0 0 0' rpy:='0 0 0' safety_distance:=0">
-    <xacro:unless value="${not connected_to}">
-      <joint name="${arm_id}_joint_${connected_to}" type="fixed">
-        <parent link="${connected_to}"/>
-        <child link="${arm_id}_link0"/>
-        <origin rpy="${rpy}" xyz="${xyz}"/>
-      </joint>
-    </xacro:unless>
-    <link name="${arm_id}_link0">
+  <!-- tf_prefix: Namespace of the panda arm. Serves to differentiate between arms in case of multiple instances. -->
+  <xacro:macro name="panda_urdf_macro" params="tf_prefix safety_distance:=0">
+    <link name="${tf_prefix}link_0">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link0.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_0.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -35,10 +28,10 @@
         </geometry>
       </collision>
     </link>
-    <link name="${arm_id}_link1">
+    <link name="${tf_prefix}link_1">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link1.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_1.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -60,18 +53,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint1" type="revolute">
+    <joint name="${tf_prefix}joint_1" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7473" soft_upper_limit="2.7473"/>
       <origin rpy="0 0 0" xyz="0 0 0.333"/>
-      <parent link="${arm_id}_link0"/>
-      <child link="${arm_id}_link1"/>
+      <parent link="${tf_prefix}link_0"/>
+      <child link="${tf_prefix}link_1"/>
       <axis xyz="0 0 1"/>
       <limit effort="87" lower="-2.7473" upper="2.7473" velocity="2.1750" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link2">
+    <link name="${tf_prefix}link_2">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link2.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_2.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -93,18 +86,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint2" type="revolute">
+    <joint name="${tf_prefix}joint_2" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.6728" soft_upper_limit="1.6728"/>
       <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
-      <parent link="${arm_id}_link1"/>
-      <child link="${arm_id}_link2"/>
+      <parent link="${tf_prefix}link_1"/>
+      <child link="${tf_prefix}link_2"/>
       <axis xyz="0 0 1"/>
       <limit effort="87" lower="-1.6728" upper="1.6728" velocity="2.1750" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link3">
+    <link name="${tf_prefix}link_3">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link3.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_3.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -126,18 +119,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint3" type="revolute">
+    <joint name="${tf_prefix}joint_3" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7473" soft_upper_limit="2.7473"/>
       <origin rpy="${pi/2} 0 0" xyz="0 -0.316 0"/>
-      <parent link="${arm_id}_link2"/>
-      <child link="${arm_id}_link3"/>
+      <parent link="${tf_prefix}link_2"/>
+      <child link="${tf_prefix}link_3"/>
       <axis xyz="0 0 1"/>
       <limit effort="87" lower="-2.7473" upper="2.7473" velocity="2.1750" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link4">
+    <link name="${tf_prefix}link_4">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link4.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_4.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -159,18 +152,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint4" type="revolute">
+    <joint name="${tf_prefix}joint_4" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.9218" soft_upper_limit="-0.2198"/>
       <origin rpy="${pi/2} 0 0" xyz="0.0825 0 0"/>
-      <parent link="${arm_id}_link3"/>
-      <child link="${arm_id}_link4"/>
+      <parent link="${tf_prefix}link_3"/>
+      <child link="${tf_prefix}link_4"/>
       <axis xyz="0 0 1"/>
       <limit effort="87" lower="-2.9218" upper="-0.2198" velocity="2.1750" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link5">
+    <link name="${tf_prefix}link_5">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link5.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_5.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -211,18 +204,18 @@
       </collision>
 
     </link>
-    <joint name="${arm_id}_joint5" type="revolute">
+    <joint name="${tf_prefix}joint_5" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7473" soft_upper_limit="2.7473"/>
       <origin rpy="${-pi/2} 0 0" xyz="-0.0825 0.384 0"/>
-      <parent link="${arm_id}_link4"/>
-      <child link="${arm_id}_link5"/>
+      <parent link="${tf_prefix}link_4"/>
+      <child link="${tf_prefix}link_5"/>
       <axis xyz="0 0 1"/>
       <limit effort="12" lower="-2.7473" upper="2.7473" velocity="2.6100" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link6">
+    <link name="${tf_prefix}link_6">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link6.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_6.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -244,18 +237,18 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint6" type="revolute">
+    <joint name="${tf_prefix}joint_6" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-0.0775" soft_upper_limit="3.6025"/>
       <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
-      <parent link="${arm_id}_link5"/>
-      <child link="${arm_id}_link6"/>
+      <parent link="${tf_prefix}link_5"/>
+      <child link="${tf_prefix}link_6"/>
       <axis xyz="0 0 1"/>
       <limit effort="12" lower="-0.0775" upper="3.6025" velocity="2.6100" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link7">
+    <link name="${tf_prefix}link_7">
       <visual>
         <geometry>
-          <mesh filename="package://${description_pkg}/meshes/visual/link7.dae"/>
+          <mesh filename="package://franka_description/meshes/visual/link_7.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -277,15 +270,15 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint7" type="revolute">
+    <joint name="${tf_prefix}joint_7" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7473" soft_upper_limit="2.7473"/>
       <origin rpy="${pi/2} 0 0" xyz="0.088 0 0"/>
-      <parent link="${arm_id}_link6"/>
-      <child link="${arm_id}_link7"/>
+      <parent link="${tf_prefix}link_6"/>
+      <child link="${tf_prefix}link_7"/>
       <axis xyz="0 0 1"/>
       <limit effort="12" lower="-2.7473" upper="2.7473" velocity="2.6100" acceleration="1.0"/>
     </joint>
-    <link name="${arm_id}_link8">
+    <link name="${tf_prefix}link_8">
       <collision>
         <origin xyz="0.0424 0.0424 -0.0250" rpy="${pi} ${pi/2} ${pi/2}"/>
         <geometry>
@@ -305,10 +298,10 @@
         </geometry>
       </collision>
     </link>
-    <joint name="${arm_id}_joint8" type="fixed">
+    <joint name="${tf_prefix}joint_8" type="fixed">
       <origin rpy="0 0 0" xyz="0 0 0.107"/>
-      <parent link="${arm_id}_link7"/>
-      <child link="${arm_id}_link8"/>
+      <parent link="${tf_prefix}link_7"/>
+      <child link="${tf_prefix}link_8"/>
     </joint>
   </xacro:macro>
 </robot>

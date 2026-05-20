@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:arg name="tf_prefix" default=""/> <!-- Name of this panda -->
+  <xacro:arg name="robot_ip" default=""/> <!-- IP address or hostname of the robot" -->
+  <xacro:arg name="use_mock_hardware" default="false"/>
+
+  <xacro:include filename="$(find franka_description)/urdf/panda.urdf_macro.xacro"/>
+  <xacro:panda_urdf_macro tf_prefix="$(arg tf_prefix)" safety_distance="0.03"/>
+
+  <xacro:include filename="$(find franka_description)/urdf/panda.ros2_control_macro.xacro"/>
+  <xacro:panda_ros2_control_macro tf_prefix="$(arg tf_prefix)" robot_ip="$(arg robot_ip)" use_mock_hardware="$(arg use_mock_hardware)"/>
+</robot>
