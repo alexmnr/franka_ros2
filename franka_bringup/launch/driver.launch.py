@@ -31,7 +31,7 @@ def launch_setup(context):
     ros2_controllers_file = PathJoinSubstitution(
         [FindPackageShare(pkg_name), "config", "ros2_controllers.yaml"]
     )
-    description_file = PathJoinSubstitution([FindPackageShare("franka_description"), "urdf", "panda.xacro.xacro"])
+    description_file = PathJoinSubstitution([FindPackageShare("franka_description"), "urdf", "panda.urdf.xacro"])
     robot_description_content = Command(
             [
                 PathJoinSubstitution([FindExecutable(name="xacro")]),
