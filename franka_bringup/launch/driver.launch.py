@@ -31,7 +31,7 @@ def launch_setup(context):
     ros2_controllers_file = PathJoinSubstitution(
         [FindPackageShare(pkg_name), "config", "ros2_controllers.yaml"]
     )
-    description_file = PathJoinSubstitution([FindPackageShare("franka_description"), "urdf", "panda.xacro.xacro"])
+    description_file = PathJoinSubstitution([FindPackageShare("franka_description"), "urdf", "panda.urdf.xacro"])
     robot_description_content = Command(
             [
                 PathJoinSubstitution([FindExecutable(name="xacro")]),
@@ -58,7 +58,10 @@ def launch_setup(context):
         executable='robot_state_publisher',
         name='robot_state_publisher',
         namespace=ns,
-        parameters=[robot_description]
+        parameters=[
+            robot_description,
+            {'publish_frequency': 500.0}
+            ]
         ))
 
     nodes.append(Node(
@@ -72,7 +75,15 @@ def launch_setup(context):
         arguments=["--ros-args", "--log-level", log_level],
         output="screen",
         ))
-
+    nodes.append(Node(
+        package="controller_manager",
+        executable="spawner",
+        namespace=ns,
+        arguments=[
+            "space_panda_controller",
+            "--ros-args", "--log-level", log_level,
+            ]
+        ))
     nodes.append(Node(
         package="controller_manager",
         executable="spawner",
@@ -82,15 +93,15 @@ def launch_setup(context):
             "--ros-args", "--log-level", log_level,
             ]
         ))
-    nodes.append(Node(
-        package="controller_manager",
-        executable="spawner",
-        namespace=ns,
-        arguments=[
-            "joint_trajectory_controller",
-            "--ros-args", "--log-level", log_level,
-            ]
-        ))
+    # nodes.append(Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     namespace=ns,
+    #     arguments=[
+    #         "joint_trajectory_controller",
+    #         "--ros-args", "--log-level", log_level,
+    #         ]
+    #     ))
     nodes.append(Node(
             package='controller_manager',
             executable='spawner',

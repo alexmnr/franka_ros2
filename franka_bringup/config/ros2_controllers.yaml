@@ -11,6 +11,13 @@
     franka_robot_state_broadcaster:
       type: franka_robot_state_broadcaster/FrankaRobotStateBroadcaster
 
+    space_panda_controller:
+      type: space_panda_controller/SpacePandaController
+
+/**/space_panda_controller:
+  ros__parameters:
+    ns: panda
+
 /**/franka_robot_state_broadcaster:
   ros__parameters:
     arm_id: panda
