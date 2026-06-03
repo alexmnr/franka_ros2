@@ -5,7 +5,7 @@ from launch.substitutions import Command, FindExecutable
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    franka_xacro_file = os.path.join(get_package_share_directory('franka_description'), 'urdf', 'panda.xacro')
+    franka_xacro_file = os.path.join(get_package_share_directory('franka_description'), 'urdf', 'panda.urdf.xacro')
     robot_description = Command([FindExecutable(name='xacro'), ' ', franka_xacro_file, ' ', 'tf_prefix:=', 'panda_'])
 
     rviz_file = os.path.join(get_package_share_directory('franka_description'), 'rviz', 'visualize_franka.rviz')

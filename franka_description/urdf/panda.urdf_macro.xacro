@@ -3,9 +3,10 @@
   <!-- safety_distance: Minimum safety distance in [m] by which the collision volumes are expanded and which is enforced during robot motions -->
   <!-- tf_prefix: Namespace of the panda arm. Serves to differentiate between arms in case of multiple instances. -->
   <xacro:macro name="panda_urdf_macro" params="tf_prefix safety_distance:=0">
+    <link name="${tf_prefix}mount_point"/>
     <joint name="${tf_prefix}base_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 0" />
-      <parent link="world" />
+      <parent link="${tf_prefix}mount_point" />
       <child link="${tf_prefix}base_link" />
     </joint>
     <link name="${tf_prefix}base_link"/>

@@ -33,7 +33,7 @@ def launch_setup(context, *args, **kwargs):
     config_package = 'franka_bringup'
 
     # Robot Description
-    urdf_file_path = PathJoinSubstitution([FindPackageShare("franka_description"), "urdf", "panda.xacro"])
+    urdf_file_path = PathJoinSubstitution([FindPackageShare("franka_description"), "urdf", "panda.urdf.xacro"])
     urdf_content = Command(
             [
                 PathJoinSubstitution([FindExecutable(name="xacro")]),
