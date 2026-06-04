@@ -51,6 +51,21 @@ def launch_setup(context):
             "robot_description": ParameterValue(robot_description_content, value_type=str)
             }
 
+    # SRDF
+    srdf_file_path = PathJoinSubstitution([FindPackageShare("franka_bringup"), "srdf", "panda.srdf.xacro"])
+    srdf_content = Command(
+            [
+                PathJoinSubstitution([FindExecutable(name="xacro")]),
+                " ",
+                srdf_file_path,
+                " ",
+                "tf_prefix:=",
+                tf_prefix,
+                ])
+    robot_description_semantic = {
+            "robot_description_semantic": ParameterValue(srdf_content, value_type=str)
+            }
+
     nodes = []
 
     nodes.append(Node(
@@ -70,7 +85,8 @@ def launch_setup(context):
         namespace=ns,
         parameters=[
             ParameterFile(ros2_controllers_file, allow_substs=True),
-            robot_description
+            robot_description,
+            robot_description_semantic,
             ],
         arguments=["--ros-args", "--log-level", log_level],
         output="screen",

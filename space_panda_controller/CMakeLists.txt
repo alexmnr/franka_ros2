@@ -15,6 +15,10 @@ set(DEPENDENCIES
   rclcpp_lifecycle
   franka_msgs
   Eigen3
+  moveit_core
+  moveit_ros_planning
+  geometry_msgs
+  realtime_tools
 )
 
 ######### Find Dependencies
