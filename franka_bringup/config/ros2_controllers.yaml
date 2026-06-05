@@ -16,7 +16,16 @@
 
 /**/space_panda_controller:
   ros__parameters:
-    ns: panda
+    move_group: $(var tf_prefix)manipulator
+    tip_link: $(var tf_prefix)ft_frame
+    joints:
+      - $(var tf_prefix)joint_1
+      - $(var tf_prefix)joint_2
+      - $(var tf_prefix)joint_3
+      - $(var tf_prefix)joint_4
+      - $(var tf_prefix)joint_5
+      - $(var tf_prefix)joint_6
+      - $(var tf_prefix)joint_7
 
 /**/franka_robot_state_broadcaster:
   ros__parameters:

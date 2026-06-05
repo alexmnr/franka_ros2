@@ -29,9 +29,12 @@ namespace space_panda_controller {
 
     protected:
       // parameters
-      std::string ns_;
-      std::string tf_prefix_;
-      const int num_joints = 7;
+      std::string move_group_;
+      std::string tip_link_;
+      std::vector<std::string> joint_names_;
+      int num_joints_;
+
+      
 
       // panda setup
       rclcpp::Client<franka_msgs::srv::SetForceTorqueCollisionBehavior>::SharedPtr panda_client_;
@@ -41,7 +44,7 @@ namespace space_panda_controller {
       moveit::core::RobotModelPtr robot_model_;
       moveit::core::RobotStatePtr robot_state_;
       const moveit::core::JointModelGroup* joint_model_group_;
-      const moveit::core::LinkModel* tip_link_;
+      const moveit::core::LinkModel* tip_link_model_;
       // Pre-allocated matrices and vectors for real-time loop
       Eigen::MatrixXd jacobian_;
       std::vector<double> current_joint_positions_;
